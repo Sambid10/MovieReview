@@ -4,17 +4,38 @@
  *
  * @format
  */
-
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+import { getAuth, onAuthStateChanged } from '@react-native-firebase/auth';
+import { StyleSheet, View} from 'react-native';
+import LoginScreen from './src/screens/LoginScreen';
+import { useState, useEffect } from 'react';
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
 
+  // Handle user state changes
+  function handleAuthStateChanged(user) {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
+
+  useEffect(() => {
+    const subscriber = onAuthStateChanged(getAuth(), handleAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
+
+  if (initializing) return null;
+
+  if (!user) {
+    return (
+      <View style={styles.container}>
+        <LoginScreen />
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <NewAppScreen templateFileName="App.tsx" />
+      <LoginScreen />
     </View>
   );
 }
@@ -22,6 +43,7 @@ function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#002335',
   },
 });
 
