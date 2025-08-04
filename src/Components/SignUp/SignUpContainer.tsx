@@ -7,37 +7,42 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import LoginTextInput from './LoginTextInput';
+import LoginTextInput from '../Login/LoginTextInput';
 import { BlurView } from '@react-native-community/blur';
 import ReusableButton from '../Button/ReusableButton';
-import { getAuth } from '@react-native-firebase/auth';
-import { signInWithEmailAndPassword } from '@react-native-firebase/auth';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+} from '@react-native-firebase/auth';
 import { AuthStackParamList } from '../../naviagation/types';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-type NavigatetoSignUpScreen = NativeStackNavigationProp<
+type NavigatetoSignInScreen = NativeStackNavigationProp<
   AuthStackParamList,
   'Login'
 >;
-export default function LoginContainer() {
+
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+export default function SignUpContainer() {
   const { width: screenWidth } = Dimensions.get('window');
-  const navigation = useNavigation<NavigatetoSignUpScreen>();
+  const navigation = useNavigation<NavigatetoSignInScreen>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    signInWithEmailAndPassword(getAuth(), email, password)
+    createUserWithEmailAndPassword(getAuth(), email, password)
       .then(() => {
         console.log('User account created & signed in!');
       })
-      .catch(err => {
-        if (err.code === 'auth/invalid-email') {
-          console.error('Invalid');
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          console.log('That email address is already in use!');
         }
-        if (err.code === 'auth/invalid-credential') {
-          console.log('invalid credentials');
+
+        if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
         }
-        console.error(err);
+
+        console.error(error);
       });
   };
   return (
@@ -54,9 +59,10 @@ export default function LoginContainer() {
       >
         <View style={styles.foreground}>
           <View style={styles.header}>
-            <Text style={styles.title}>Login</Text>
-            <Text style={styles.subtitle}>Please sign in to continue</Text>
+            <Text style={styles.title}>Sign Up</Text>
+            <Text style={styles.subtitle}>Create an account to continue</Text>
           </View>
+
           <View style={styles.inputGroup}>
             <LoginTextInput
               securetextentry={false}
@@ -72,18 +78,13 @@ export default function LoginContainer() {
             />
           </View>
 
-          <Text style={[styles.linktext, { textAlign: 'right' }]}>
-            Forgot Password?
-          </Text>
-
-          <ReusableButton title="Login" onPress={handleLogin} />
+          <ReusableButton title="Sign Up" onPress={handleLogin} />
           <View style={styles.footer}>
-            <Text style={styles.text}>Don't have an account? Please</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-              <Text style={styles.linktext}> Signup </Text>
+            <Text style={styles.text}>Already have an account? Go to</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+              <Text style={styles.linktext}> Login </Text>
             </TouchableOpacity>
-
-            <Text style={styles.text}>first</Text>
+            <Text style={styles.text}>page.</Text>
           </View>
         </View>
       </BlurView>
@@ -102,9 +103,10 @@ const styles = StyleSheet.create({
     height: 'auto',
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#FFFFFF52',
+    opacity: 1,
   },
   foreground: {
-    backgroundColor: 'rgba(177, 172, 172, 0.4)',
+    backgroundColor: 'rgba(130, 81, 81, 0.4)',
     position: 'relative',
     zIndex: 10,
     paddingTop: 12,

@@ -1,13 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
-import { Image, StyleSheet, View } from 'react-native';
-import LoginContainer from '../../Components/Login/LoginContainer';
-import { ImageBackground } from 'react-native';
-export default function LoginScreen() {
+import { ImageBackground, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Image } from 'react-native';
+import SignUpContainer from '../../Components/SignUp/SignUpContainer';
+export default function SignupScreen() {
   return (
     <View style={style.maincontainer}>
       <ImageBackground
         style={style.image}
-        source={require('../../assets/background.png')}
+        source={require('../../assets/background1.png')}
         resizeMode="cover"
       >
         <View style={{ position: 'absolute', top: 21, left: 16 }}>
@@ -23,7 +24,7 @@ export default function LoginScreen() {
           />
         </View>
       </ImageBackground>
-      <LoginContainer />
+      <SignUpContainer />
     </View>
   );
 }
@@ -33,7 +34,7 @@ const style = StyleSheet.create({
     position: 'relative',
     backgroundColor: '#002335',
   },
-   image: {
+  image: {
     flex: 1,
   },
 });

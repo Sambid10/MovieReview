@@ -1,41 +1,39 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-import { getAuth, onAuthStateChanged } from '@react-native-firebase/auth';
-import { StyleSheet, View} from 'react-native';
-import LoginScreen from './src/screens/LoginScreen';
+import {
+  getAuth,
+  onAuthStateChanged,
+  FirebaseAuthTypes,
+} from '@react-native-firebase/auth';
+import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
+import AuthNaviagtion from './src/naviagation/AuthNavigation';
 
 function App() {
   const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState();
-
-  // Handle user state changes
-  function handleAuthStateChanged(user) {
-    setUser(user);
-    if (initializing) setInitializing(false);
-  }
+  const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
 
   useEffect(() => {
-    const subscriber = onAuthStateChanged(getAuth(), handleAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);
+    const subscriber = onAuthStateChanged(getAuth(), user => {
+      console.log('Auth state changed:', user);
+      setUser(user);
+      if (initializing) setInitializing(false);
+    });
+    return subscriber;
+  }, [initializing]);
 
-  if (initializing) return null;
+  if (initializing) return <View style={styles.container} />;
 
-  if (!user) {
-    return (
-      <View style={styles.container}>
-        <LoginScreen />
-      </View>
-    );
-  }
   return (
     <View style={styles.container}>
-      <LoginScreen />
+      <NavigationContainer>
+        {!user ? (
+          <AuthNaviagtion />
+        ) : (
+          <View>
+            <Text>ass</Text>
+          </View>
+        )}
+      </NavigationContainer>
     </View>
   );
 }
@@ -43,7 +41,6 @@ function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#002335',
   },
 });
 
