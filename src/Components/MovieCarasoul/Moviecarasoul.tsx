@@ -8,17 +8,17 @@ const Movie_Data = [
     title: 'Gray Hound',
     src: require('../../assets/Test.png'),
   },
-   {
+  {
     id: 2,
     title: 'Inside Out',
     src: require('../../assets/test1.png'),
   },
-   {
+  {
     id: 3,
     title: 'Gray Hound',
     src: require('../../assets/Test.png'),
   },
-   {
+  {
     id: 4,
     title: 'Gray Hound',
     src: require('../../assets/Test.png'),
@@ -27,7 +27,7 @@ const Movie_Data = [
 
 export default function MovieCarousel({ title }: { title: string }) {
   return (
-    <View style={{ marginTop: 4 ,display:"flex",gap:8}}>
+    <View style={{ marginTop: 4, display: 'flex', gap: 8 }}>
       <Text style={{ color: 'white', fontSize: 16, fontWeight: '600' }}>
         {title}
       </Text>
@@ -50,12 +50,15 @@ const styles = StyleSheet.create({
   img: {
     height: 160,
     width: 120,
-    resizeMode: 'cover', 
+    resizeMode: 'cover',
+    borderWidth:StyleSheet.hairlineWidth,
+    borderColor:"black",
+    borderRadius:12
   },
-  imagecontainer:{
-    display:"flex",
-    gap:12,
-    marginRight:16,
-    marginBottom:12
-  }
+  imagecontainer: {
+    display: 'flex',
+    gap: 12,
+    marginRight: 16,
+    marginBottom: 12,
+  },
 });

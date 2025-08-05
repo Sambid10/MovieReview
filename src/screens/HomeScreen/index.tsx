@@ -46,9 +46,10 @@ export default function HomeScreen() {
                 fontSize: 21,
                 fontWeight: 'bold',
                 letterSpacing: 1,
+                textTransform:"capitalize"
               }}
             >
-              {emailusername}!
+              {emailusername} !
             </Text>
           </View>
 
