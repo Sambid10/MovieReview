@@ -12,22 +12,21 @@ import { BlurView } from '@react-native-community/blur';
 import ReusableButton from '../Button/ReusableButton';
 import { getAuth } from '@react-native-firebase/auth';
 import { signInWithEmailAndPassword } from '@react-native-firebase/auth';
-import { AuthStackParamList } from '../../naviagation/types';
+import {  RootStackParamList } from '../../naviagation/types';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 type NavigatetoSignUpScreen = NativeStackNavigationProp<
-  AuthStackParamList,
+  RootStackParamList,
   'Login'
 >;
 export default function LoginContainer() {
-  const [loading,setLoading]=useState(false)
   const { width: screenWidth } = Dimensions.get('window');
   const navigation = useNavigation<NavigatetoSignUpScreen>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const [loading,setLoading]=useState(false)
   const handleLogin = () => {
-    setLoading(true)
+      setLoading(true)
     signInWithEmailAndPassword(getAuth(), email, password)
       .then(() => {
         console.log('User account created & signed in!');
@@ -39,8 +38,8 @@ export default function LoginContainer() {
         if (err.code === 'auth/invalid-credential') {
           console.log('invalid credentials');
         }
+         setLoading(false)
         console.error(err);
-        setLoading(false)
       }).finally(()=>setLoading(false));
   };
   return (
@@ -61,7 +60,6 @@ export default function LoginContainer() {
             <Text style={styles.subtitle}>Please sign in to continue</Text>
           </View>
           <View style={styles.inputGroup}>
-            
             <LoginTextInput
               securetextentry={false}
               onTextChange={setEmail}

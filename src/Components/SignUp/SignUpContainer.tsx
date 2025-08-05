@@ -14,12 +14,11 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
 } from '@react-native-firebase/auth';
-import { AuthStackParamList } from '../../naviagation/types';
+import { RootStackParamList } from '../../naviagation/types';
 type NavigatetoSignInScreen = NativeStackNavigationProp<
-  AuthStackParamList,
+  RootStackParamList,
   'Login'
 >;
-
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 export default function SignUpContainer() {

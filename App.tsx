@@ -6,9 +6,12 @@ import {
 import { StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
-import AuthNaviagtion from './src/naviagation/AuthNavigation';
-import RootStack from './src/naviagation/navigation';
-
+import LoginScreen from './src/screens/LoginScreen';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { RootStackParamList } from './src/naviagation/types';
+import { BottomTabs } from './src/naviagation/BottomTabsNavigation';
+import SignupScreen from './src/screens/SignUpScreen';
+const Stack = createNativeStackNavigator<RootStackParamList>();
 function App() {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
@@ -27,7 +30,16 @@ function App() {
   return (
     <View style={styles.container}>
       <NavigationContainer>
-        {!user ? <AuthNaviagtion /> : <RootStack />}
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          {!user ? (
+            <>
+              <Stack.Screen name="Login" component={LoginScreen} />
+              <Stack.Screen name="Signup" component={SignupScreen} />
+            </>
+          ) : (
+            <Stack.Screen name="Root" component={BottomTabs} />
+          )}
+        </Stack.Navigator>
       </NavigationContainer>
     </View>
   );
