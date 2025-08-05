@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { Image, StyleSheet, TextInput, View } from 'react-native';
-export default function LoginTextInput({
+export default function AuthTextInput({
   placeholder,
   onTextChange,
   securetextentry,

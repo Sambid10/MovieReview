@@ -1,30 +1,18 @@
-/* eslint-disable react-native/no-inline-styles */
+
 import React, { useState } from 'react';
 import {
   StyleSheet,
-  Text,
   View,
   Dimensions,
-  TouchableOpacity,
 } from 'react-native';
-import LoginTextInput from '../Login/LoginTextInput';
-import { BlurView } from '@react-native-community/blur';
-import ReusableButton from '../Button/ReusableButton';
 import {
   getAuth,
   createUserWithEmailAndPassword,
 } from '@react-native-firebase/auth';
-import { RootStackParamList } from '../../naviagation/types';
-type NavigatetoSignInScreen = NativeStackNavigationProp<
-  RootStackParamList,
-  'Login'
->;
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import AuthContainer from '../AuthContainer/AuthContainer';
 export default function SignUpContainer() {
   const [loading,setLoading]=useState(false)
   const { width: screenWidth } = Dimensions.get('window');
-  const navigation = useNavigation<NavigatetoSignInScreen>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -48,47 +36,7 @@ export default function SignUpContainer() {
   };
   return (
     <View style={[styles.wrapper, { left: screenWidth * 0.05 }]}>
-      <BlurView
-        blurType="light"
-        blurAmount={12}
-        style={{
-          height: '100%',
-          width: '100%',
-          position: 'relative',
-          zIndex: 0,
-        }}
-      >
-        <View style={styles.foreground}>
-          <View style={styles.header}>
-            <Text style={styles.title}>Sign Up</Text>
-            <Text style={styles.subtitle}>Create an account to continue</Text>
-          </View>
-
-          <View style={styles.inputGroup}>
-            <LoginTextInput
-              securetextentry={false}
-              onTextChange={setEmail}
-              icon={require('../../assets/user.png')}
-              placeholder={'Email'}
-            />
-            <LoginTextInput
-              securetextentry={true}
-              onTextChange={setPassword}
-              placeholder={'Password'}
-              icon={require('../../assets/pass.png')}
-            />
-          </View>
-
-          <ReusableButton loading={loading} title="Sign up" onPress={handleSignup} />
-          <View style={styles.footer}>
-            <Text style={styles.text}>Already have an account? Go to</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-              <Text style={styles.linktext}> Login </Text>
-            </TouchableOpacity>
-            <Text style={styles.text}>page.</Text>
-          </View>
-        </View>
-      </BlurView>
+      <AuthContainer title={"Sign Up"} subtitle={"Create an account to continue"}  navigateauthScreen='Login' handleAuth={handleSignup} loading={loading} setEmail={setEmail} setPassword={setPassword}/>
     </View>
   );
 }
