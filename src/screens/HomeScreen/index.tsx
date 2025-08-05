@@ -1,13 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 import { getAuth } from '@react-native-firebase/auth';
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import Moviecarasoul from '../../Components/MovieCarasoul/Moviecarasoul';
 
 export default function HomeScreen() {
-    const auth=getAuth()
-    const emailusername=auth.currentUser?.email?.split("@")[0]
+  const auth = getAuth();
+  const emailusername = auth.currentUser?.email?.split('@')[0];
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={{ display: 'flex', gap: 24 }}>
         <Image
           style={{
@@ -21,7 +22,14 @@ export default function HomeScreen() {
           source={require('../../assets/logo.png')}
         />
         <View style={{ display: 'flex', gap: 4 }}>
-          <View style={{ display: 'flex', gap: 2, alignItems: 'center',flexDirection:"row" }}>
+          <View
+            style={{
+              display: 'flex',
+              gap: 2,
+              alignItems: 'center',
+              flexDirection: 'row',
+            }}
+          >
             <Text
               style={{
                 color: 'white',
@@ -30,18 +38,17 @@ export default function HomeScreen() {
                 letterSpacing: 1,
               }}
             >
-              Welcome Back, {""} 
+              Welcome Back, {''}
             </Text>
-              <Text
+            <Text
               style={{
                 color: '#FFCA45',
                 fontSize: 21,
-                textTransform:"capitalize",
                 fontWeight: 'bold',
                 letterSpacing: 1,
               }}
             >
-              {emailusername} !
+              {emailusername}!
             </Text>
           </View>
 
@@ -49,8 +56,14 @@ export default function HomeScreen() {
             Review or log film you've watched..
           </Text>
         </View>
+        <View style={{display:"flex",gap:20}}>
+          <Moviecarasoul title="New Releases" />
+        <Moviecarasoul title="Upcoming Movies" />
+        <Moviecarasoul title="Ranked Movies" />
+        </View>
+        
       </View>
-    </View>
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({
