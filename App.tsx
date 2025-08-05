@@ -3,10 +3,11 @@ import {
   onAuthStateChanged,
   FirebaseAuthTypes,
 } from '@react-native-firebase/auth';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import AuthNaviagtion from './src/naviagation/AuthNavigation';
+import RootStack from './src/naviagation/navigation';
 
 function App() {
   const [initializing, setInitializing] = useState(true);
@@ -26,13 +27,7 @@ function App() {
   return (
     <View style={styles.container}>
       <NavigationContainer>
-        {!user ? (
-          <AuthNaviagtion />
-        ) : (
-          <View>
-            <Text>lol</Text>
-          </View>
-        )}
+        {!user ? <AuthNaviagtion /> : <RootStack />}
       </NavigationContainer>
     </View>
   );
