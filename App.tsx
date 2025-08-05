@@ -30,7 +30,7 @@ function App() {
           <AuthNaviagtion />
         ) : (
           <View>
-            <Text>ass</Text>
+            <Text>lol</Text>
           </View>
         )}
       </NavigationContainer>
