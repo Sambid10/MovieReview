@@ -23,12 +23,14 @@ type NavigatetoSignInScreen = NativeStackNavigationProp<
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 export default function SignUpContainer() {
+  const [loading,setLoading]=useState(false)
   const { width: screenWidth } = Dimensions.get('window');
   const navigation = useNavigation<NavigatetoSignInScreen>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
+  const handleSignup = () => {
+    setLoading(true)
     createUserWithEmailAndPassword(getAuth(), email, password)
       .then(() => {
         console.log('User account created & signed in!');
@@ -41,9 +43,9 @@ export default function SignUpContainer() {
         if (error.code === 'auth/invalid-email') {
           console.log('That email address is invalid!');
         }
-
+        setLoading(false)
         console.error(error);
-      });
+      }).finally(()=>setLoading(false));
   };
   return (
     <View style={[styles.wrapper, { left: screenWidth * 0.05 }]}>
@@ -78,7 +80,7 @@ export default function SignUpContainer() {
             />
           </View>
 
-          <ReusableButton title="Sign Up" onPress={handleLogin} />
+          <ReusableButton loading={loading} title="Sign up" onPress={handleSignup} />
           <View style={styles.footer}>
             <Text style={styles.text}>Already have an account? Go to</Text>
             <TouchableOpacity onPress={() => navigation.navigate('Login')}>

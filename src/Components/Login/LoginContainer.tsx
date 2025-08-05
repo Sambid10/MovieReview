@@ -20,12 +20,14 @@ type NavigatetoSignUpScreen = NativeStackNavigationProp<
   'Login'
 >;
 export default function LoginContainer() {
+  const [loading,setLoading]=useState(false)
   const { width: screenWidth } = Dimensions.get('window');
   const navigation = useNavigation<NavigatetoSignUpScreen>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
+    setLoading(true)
     signInWithEmailAndPassword(getAuth(), email, password)
       .then(() => {
         console.log('User account created & signed in!');
@@ -38,7 +40,8 @@ export default function LoginContainer() {
           console.log('invalid credentials');
         }
         console.error(err);
-      });
+        setLoading(false)
+      }).finally(()=>setLoading(false));
   };
   return (
     <View style={[styles.wrapper, { left: screenWidth * 0.05 }]}>
@@ -58,6 +61,7 @@ export default function LoginContainer() {
             <Text style={styles.subtitle}>Please sign in to continue</Text>
           </View>
           <View style={styles.inputGroup}>
+            
             <LoginTextInput
               securetextentry={false}
               onTextChange={setEmail}
@@ -76,7 +80,7 @@ export default function LoginContainer() {
             Forgot Password?
           </Text>
 
-          <ReusableButton title="Login" onPress={handleLogin} />
+          <ReusableButton loading={loading} title="Login" onPress={handleLogin} />
           <View style={styles.footer}>
             <Text style={styles.text}>Don't have an account? Please</Text>
             <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
