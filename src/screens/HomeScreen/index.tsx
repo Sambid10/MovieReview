@@ -30,17 +30,17 @@ export default function HomeScreen() {
                 letterSpacing: 1,
               }}
             >
-              Welcome Back,
+              Welcome Back, {""}
             </Text>
               <Text
               style={{
-                color: '#',
+                color: '#FFCA45',
                 fontSize: 21,
                 fontWeight: 'bold',
                 letterSpacing: 1,
               }}
             >
-              {emailusername}
+              {emailusername}!
             </Text>
           </View>
 
