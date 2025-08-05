@@ -1,23 +1,18 @@
-
 import React, { useState } from 'react';
-import {
-  StyleSheet,
-  View,
-  Dimensions,
-} from 'react-native';
+import { StyleSheet, View, Dimensions } from 'react-native';
 import {
   getAuth,
   createUserWithEmailAndPassword,
 } from '@react-native-firebase/auth';
 import AuthContainer from '../AuthContainer/AuthContainer';
 export default function SignUpContainer() {
-  const [loading,setLoading]=useState(false)
+  const [loading, setLoading] = useState(false);
   const { width: screenWidth } = Dimensions.get('window');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSignup = () => {
-    setLoading(true)
+    setLoading(true);
     createUserWithEmailAndPassword(getAuth(), email, password)
       .then(() => {
         console.log('User account created & signed in!');
@@ -30,13 +25,22 @@ export default function SignUpContainer() {
         if (error.code === 'auth/invalid-email') {
           console.log('That email address is invalid!');
         }
-        setLoading(false)
+        setLoading(false);
         console.error(error);
-      }).finally(()=>setLoading(false));
+      })
+      .finally(() => setLoading(false));
   };
   return (
     <View style={[styles.wrapper, { left: screenWidth * 0.05 }]}>
-      <AuthContainer title={"Sign Up"} subtitle={"Create an account to continue"}  navigateauthScreen='Login' handleAuth={handleSignup} loading={loading} setEmail={setEmail} setPassword={setPassword}/>
+      <AuthContainer
+        title={'Sign Up'}
+        subtitle={'Create an account to continue'}
+        navigateauthScreen="Login"
+        handleAuth={handleSignup}
+        loading={loading}
+        setEmail={setEmail}
+        setPassword={setPassword}
+      />
     </View>
   );
 }
