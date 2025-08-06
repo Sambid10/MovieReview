@@ -1,14 +1,15 @@
+/* eslint-disable react/no-unstable-nested-components */
 
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
-  Image,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
+import FastImage from 'react-native-fast-image'
 import { MovieApiResponse } from '../../types/MovieTypes';
 import axios from 'axios';
 const options = {
@@ -42,7 +43,7 @@ export default function MovieCarousel({
       }
     };
     fetchMovies();
-  }, []);
+  }, [url]);
   return (
     <View style={{ marginTop: 4, display: 'flex', gap: 8 }}>
       <Text style={{ color: 'white', fontSize: 16, fontWeight: '600' }}>
@@ -59,11 +60,12 @@ export default function MovieCarousel({
           keyExtractor={item => item.id.toString()}
           renderItem={({ item }) => (
             <View style={styles.imagecontainer}>
-              <Image
-                source={{
-                  uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
-                }}
-                style={styles.img}
+              <FastImage
+              style={styles.img}
+              source={{
+                uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
+              }}
+             
               />
               <Text numberOfLines={1} style={{ color: 'white', maxWidth: 120 }}>
                 {item.title}

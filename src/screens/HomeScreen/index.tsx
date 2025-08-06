@@ -67,9 +67,7 @@ export default function HomeScreen() {
         </View>
         <View style={{ display: 'flex', gap: 20 }}>
           <Moviecarasoul url={popularmovieurl} title="Popular movies" />
-
           <Moviecarasoul url={upcomingmoveurl} title="Upcoming Movies" />
-
           <Moviecarasoul url={topratedmovieurl} title="Top-Rated Movies" />
         </View>
       </View>
