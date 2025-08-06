@@ -11,7 +11,7 @@ const upcomingmoveurl =
 const topratedmovieurl =
   'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1';
 
-export type MovieData = [];
+
 export default function HomeScreen() {
   const auth = getAuth();
   const emailusername = auth.currentUser?.email?.split('@')[0];

@@ -1,24 +1,35 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
+import {
+  CompositeScreenProps,
+  NavigatorScreenParams,
+} from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { CompositeNavigationProp } from '@react-navigation/native';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
+export type NavigationProp = CompositeNavigationProp<
+  BottomTabNavigationProp<BottomTabParamList>,
+  NativeStackNavigationProp<RootStackParamList>
+>;
 
-export type AuthStackParamList={
-  Login: undefined,
-  Signup:undefined,
-}
+export type AuthStackParamList = {
+  Login: undefined;
+  Signup: undefined;
+};
 
 export type RootStackParamList = {
   Root: NavigatorScreenParams<BottomTabParamList>;
-  Login: undefined,
-  Signup:undefined,
+  MovieDetails: { movieId: number };
+  Login: undefined;
+  Signup: undefined;
 };
 
 export type BottomTabParamList = {
-  Home: undefined
-  Profile:undefined
-  Search:undefined
-  Wishlist:undefined
+  Home: undefined;
+  Profile: undefined;
+  Search: undefined;
+  Wishlist: undefined;
 };
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
@@ -29,7 +40,6 @@ export type BottomtabScreenProps<T extends keyof BottomTabParamList> =
     BottomTabScreenProps<BottomTabParamList, T>,
     RootStackScreenProps<keyof RootStackParamList>
   >;
-
 
 declare global {
   namespace ReactNavigation {
