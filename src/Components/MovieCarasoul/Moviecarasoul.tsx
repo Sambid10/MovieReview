@@ -1,44 +1,34 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
-
-const Movie_Data = [
-  {
-    id: 1,
-    title: 'Gray Hound',
-    src: require('../../assets/Test.png'),
-  },
-  {
-    id: 2,
-    title: 'Inside Out',
-    src: require('../../assets/test1.png'),
-  },
-  {
-    id: 3,
-    title: 'Gray Hound',
-    src: require('../../assets/Test.png'),
-  },
-  {
-    id: 4,
-    title: 'Gray Hound',
-    src: require('../../assets/Test.png'),
-  },
-];
-
-export default function MovieCarousel({ title }: { title: string }) {
+import { Movie } from '../../types/MovieTypes';
+export default function MovieCarousel({
+  title,
+  data,
+}: {
+  title: string;
+  data: Movie[];
+}) {
   return (
     <View style={{ marginTop: 4, display: 'flex', gap: 8 }}>
       <Text style={{ color: 'white', fontSize: 16, fontWeight: '600' }}>
         {title}
       </Text>
       <FlatList
-        data={Movie_Data}
+        data={data}
         horizontal
         keyExtractor={item => item.id.toString()}
         renderItem={({ item }) => (
           <View style={styles.imagecontainer}>
-            <Image source={item.src} style={styles.img} />
-            <Text style={{ color: 'white' }}>{item.title}</Text>
+            <Image
+              source={{
+                uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
+              }}
+              style={styles.img}
+            />
+            <Text numberOfLines={1} style={{ color: 'white', maxWidth: 120 }}>
+              {item.title}
+            </Text>
           </View>
         )}
       />
@@ -51,9 +41,9 @@ const styles = StyleSheet.create({
     height: 160,
     width: 120,
     resizeMode: 'cover',
-    borderWidth:StyleSheet.hairlineWidth,
-    borderColor:"black",
-    borderRadius:12
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'black',
+    borderRadius: 12,
   },
   imagecontainer: {
     display: 'flex',
