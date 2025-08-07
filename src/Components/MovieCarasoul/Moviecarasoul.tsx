@@ -1,18 +1,20 @@
-/* eslint-disable react/no-unstable-nested-components */
-
 /* eslint-disable react-native/no-inline-styles */
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
-import FastImage from 'react-native-fast-image'
+import FastImage from 'react-native-fast-image';
 import { MovieApiResponse } from '../../types/MovieTypes';
 import axios from 'axios';
-const options = {
+import { useNavigation } from '@react-navigation/native';
+import { NavigationProp } from '../../naviagation/types';
+import axiosInstance from '../../axios/axios';
+export const options = {
   method: 'GET',
   headers: {
     accept: 'application/json',
@@ -29,21 +31,26 @@ export default function MovieCarousel({
 }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<MovieApiResponse>();
+  const navigation = useNavigation<NavigationProp>();
   const moviedata = data?.results;
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        setLoading(true);
-        const res = await axios.get(url, options);
-        setData(res.data);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchMovies();
+
+  const fetchMovies = useCallback(async () => {
+    try {
+      setLoading(true);
+      const res1=await axiosInstance.get("movie/popular?language=en-US&page=1")
+      console.log(res1,"respomse from instance")
+      const res = await axios.get(url, options);
+      setData(res.data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   }, [url]);
+
+  useEffect(() => {
+    fetchMovies();
+  }, [fetchMovies]);
   return (
     <View style={{ marginTop: 4, display: 'flex', gap: 8 }}>
       <Text style={{ color: 'white', fontSize: 16, fontWeight: '600' }}>
@@ -51,7 +58,7 @@ export default function MovieCarousel({
       </Text>
       {loading ? (
         <View style={styles.loading}>
-        <ActivityIndicator color={"white"}/>
+          <ActivityIndicator color={'white'} />
         </View>
       ) : (
         <FlatList
@@ -59,18 +66,22 @@ export default function MovieCarousel({
           horizontal
           keyExtractor={item => item.id.toString()}
           renderItem={({ item }) => (
-            <View style={styles.imagecontainer}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("MovieDetails",{movieId:item.id})
+              }
+              style={styles.imagecontainer}
+            >
               <FastImage
-              style={styles.img}
-              source={{
-                uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
-              }}
-             
+                style={styles.img}
+                source={{
+                  uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
+                }}
               />
               <Text numberOfLines={1} style={{ color: 'white', maxWidth: 120 }}>
                 {item.title}
               </Text>
-            </View>
+            </TouchableOpacity>
           )}
         />
       )}
@@ -93,7 +104,7 @@ const styles = StyleSheet.create({
     marginRight: 16,
     marginBottom: 12,
   },
-   loading: {
+  loading: {
     height: 160,
     display: 'flex',
     justifyContent: 'center',

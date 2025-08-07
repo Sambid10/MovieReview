@@ -11,6 +11,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RootStackParamList } from './src/naviagation/types';
 import { BottomTabs } from './src/naviagation/BottomTabsNavigation';
 import SignupScreen from './src/screens/SignUpScreen';
+import MovieDetailScreen from './src/screens/MovieDetailsScreen';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 function App() {
   const [initializing, setInitializing] = useState(true);
@@ -37,7 +38,10 @@ function App() {
               <Stack.Screen name="Signup" component={SignupScreen} />
             </>
           ) : (
-            <Stack.Screen name="Root" component={BottomTabs} />
+            <>
+             <Stack.Screen name="Root" component={BottomTabs} />
+            <Stack.Screen name='MovieDetails' component={MovieDetailScreen}/></>
+           
           )}
         </Stack.Navigator>
       </NavigationContainer>
