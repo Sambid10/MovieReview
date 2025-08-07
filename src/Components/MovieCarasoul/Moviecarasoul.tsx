@@ -13,6 +13,7 @@ import { MovieApiResponse } from '../../types/MovieTypes';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProp } from '../../naviagation/types';
+import axiosInstance from '../../axios/axios';
 export const options = {
   method: 'GET',
   headers: {
@@ -36,6 +37,8 @@ export default function MovieCarousel({
   const fetchMovies = useCallback(async () => {
     try {
       setLoading(true);
+      const res1=await axiosInstance.get("movie/popular?language=en-US&page=1")
+      console.log(res1,"respomse from instance")
       const res = await axios.get(url, options);
       setData(res.data);
     } catch (err) {
