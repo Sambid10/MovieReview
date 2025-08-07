@@ -10,6 +10,7 @@ import { NavigationProp, RootStackParamList } from '../../naviagation/types';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import MovieReviewTextInput from '../../Components/MovieReviewTextInpiut/MovieReviewTextInput';
 import FastImage from 'react-native-fast-image';
+import AddToFavourites from '../../Components/AddToFavourites/AddToFavourites';
 import { Dimensions } from 'react-native';
 import { useState } from 'react';
 import { Image } from 'react-native';
@@ -22,14 +23,14 @@ export default function MovieReviewScreen() {
   const navigation = useNavigation<NavigationProp>();
   const [loading, setLoading] = useState(false);
   const [review, setReview] = useState<string>('');
-  const addReview = () => {
+  const addReview = async () => {
     if (!review.trim()) {
       setLoading(false);
       return null;
     }
     try {
       setLoading(true);
-      firestore()
+      await firestore()
         .collection('movie_reviews')
         .add({
           movieId: route.params.moviedetails.id,
@@ -38,7 +39,7 @@ export default function MovieReviewScreen() {
           review: review,
         })
         .then(() => {
-        setLoading(false)
+          setLoading(false);
           navigation.navigate('MovieDetails', {
             movieId: route.params.moviedetails.id,
           });
@@ -73,6 +74,7 @@ export default function MovieReviewScreen() {
           <Text style={{ flexWrap: 'wrap', color: 'white', fontSize: 24 }}>
             {route.params.moviedetails.title}
           </Text>
+          <AddToFavourites movieId={route.params.moviedetails.id} />
         </View>
         <View style={{ width: '48%' }}>
           <View

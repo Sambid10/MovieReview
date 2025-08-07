@@ -129,7 +129,7 @@ const Component = ({ data, src }: { data: string; src: number }) => {
 const styles = StyleSheet.create({
     button: {
     height: 40,
-    borderRadius: 99,
+    borderRadius:12,
     backgroundColor: '#FFCA45',
     display: 'flex',
     justifyContent: 'center',

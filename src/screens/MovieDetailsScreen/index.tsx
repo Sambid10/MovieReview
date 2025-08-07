@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../naviagation/types';
@@ -8,6 +8,7 @@ import { ActivityIndicator } from 'react-native';
 import MovieDetailsContainer from '../../Components/MovieDetailContainer';
 import { Movie } from '../../types/MovieTypes';
 type MovieDetailsProp = RouteProp<RootStackParamList, 'MovieDetails'>;
+import AllReviewContainer from '../../Components/AllReviewContainer/AllReviewContainer';
 import UserReviewContainer from '../../Components/UserReviewContainer/UserReviewContainer';
 import axiosInstance from '../../axios/axios';
 export default function MovieDetailScreen() {
@@ -32,7 +33,7 @@ export default function MovieDetailScreen() {
     fetchMovieDetail();
   }, [route.params.movieId]);
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {loading ? (
         <View style={styles.loading}>
           <ActivityIndicator color={'white'} />
@@ -43,12 +44,12 @@ export default function MovieDetailScreen() {
             <>
               <MovieDetailsContainer data={data} />
               <UserReviewContainer movieId={data.id}/>
+              <AllReviewContainer movieId={data.id}/>
             </>
           )}
-         
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 }
 

@@ -3,7 +3,8 @@ import { getAuth } from '@react-native-firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
-import { BlurView } from '@react-native-community/blur';
+
+import ReviewContainer from '../ReviewContainer/ReviewContainer';
 
 type Review = {
   movieId: number;
@@ -54,49 +55,12 @@ export default function UserReviewContainer({ movieId }: { movieId: number }) {
         <View style={{ display: 'flex', gap: 0, marginTop: 12 }}>
           {review.length > 0 ? (
             review.map((rev, index) => (
-              <View
+              <ReviewContainer
+                emailusername={emailusername!}
+                index={index}
+                review={rev.review}
                 key={index}
-                style={{
-                  height: 70,
-                  borderRadius: 12,
-                  borderWidth: StyleSheet.hairlineWidth,
-                  borderColor: '#000',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  marginBottom: 12,
-                }}
-              >
-                <BlurView
-                  blurType="light"
-                  blurAmount={15}
-                  style={StyleSheet.absoluteFill}
-                />
-                <View
-                  style={{
-                    flex: 1,
-                    padding: 12,
-                    justifyContent: 'center',
-                  }}
-                >
-                  <View style={{ display: 'flex', flexDirection: 'row' }}>
-                    <Text
-                      style={{ color: 'white', fontSize: 10, marginBottom: 4 }}
-                    >
-                      Review by{' '}
-                    </Text>
-                    <Text
-                      style={{
-                        color: '#FFCA45',
-                        fontSize: 10,
-                        marginBottom: 4,
-                      }}
-                    >
-                      {emailusername}
-                    </Text>
-                  </View>
-                  <Text style={styles.reviewText}>{rev.review}</Text>
-                </View>
-              </View>
+              />
             ))
           ) : (
             <Text style={styles.placeholder}>
@@ -127,7 +91,8 @@ const styles = StyleSheet.create({
   },
   placeholder: {
     color: 'gray',
-    fontSize: 14,
+    fontSize: 12,
+    marginLeft: 12,
   },
   blurOverlay: {
     position: 'absolute',
