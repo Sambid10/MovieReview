@@ -12,6 +12,7 @@ import { RootStackParamList } from './src/naviagation/types';
 import { BottomTabs } from './src/naviagation/BottomTabsNavigation';
 import SignupScreen from './src/screens/SignUpScreen';
 import MovieDetailScreen from './src/screens/MovieDetailsScreen';
+import MovieReviewScreen from './src/screens/MovieReviewScreen';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 function App() {
   const [initializing, setInitializing] = useState(true);
@@ -40,7 +41,9 @@ function App() {
           ) : (
             <>
              <Stack.Screen name="Root" component={BottomTabs} />
-            <Stack.Screen name='MovieDetails' component={MovieDetailScreen}/></>
+            <Stack.Screen name='MovieDetails' component={MovieDetailScreen}/>
+              <Stack.Screen name='MovieReview' component={MovieReviewScreen}/></>
+            
            
           )}
         </Stack.Navigator>

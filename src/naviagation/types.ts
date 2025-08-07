@@ -7,6 +7,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Movie } from '../types/MovieTypes';
 
 export type NavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<BottomTabParamList>,
@@ -21,6 +22,7 @@ export type AuthStackParamList = {
 export type RootStackParamList = {
   Root: NavigatorScreenParams<BottomTabParamList>;
   MovieDetails: { movieId: number };
+  MovieReview: { moviedetails: Movie };
   Login: undefined;
   Signup: undefined;
 };

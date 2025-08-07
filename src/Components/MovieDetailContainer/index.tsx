@@ -5,9 +5,12 @@ import { Movie } from '../../types/MovieTypes';
 import { BlurView } from '@react-native-community/blur';
 import FastImage from 'react-native-fast-image';
 import { MinHrConverter } from '../../helpers/MinHrConnverter';
+import { useNavigation } from '@react-navigation/native';
+import { NavigationProp } from '../../naviagation/types';
 
 export default function MovieDetailsContainer({ data }: { data: Movie }) {
   const runtime = MinHrConverter(data.runtime);
+  const navigation=useNavigation<NavigationProp>()
   return (
     <>
       <View style={styles.container}>
@@ -94,7 +97,9 @@ export default function MovieDetailsContainer({ data }: { data: Movie }) {
         <Component data={'Not watched'} src={require('../../assets/eye.png')} />
       </View>
     </View>
-    <TouchableOpacity style={styles.button}>
+    <TouchableOpacity
+    onPress={()=>navigation.navigate("MovieReview",{moviedetails:data})}
+    style={styles.button}>
       <Text style={{color:"white",fontWeight:"bold",letterSpacing:0.5,fontSize:16}}>Add your review</Text>
     </TouchableOpacity>
     </>

@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
-import { StyleSheet,  View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../naviagation/types';
 import { useState } from 'react';
 import { ActivityIndicator } from 'react-native';
-import axios from 'axios';
 import MovieDetailsContainer from '../../Components/MovieDetailContainer';
-import { options } from '../../Components/MovieCarasoul/Moviecarasoul';
 import { Movie } from '../../types/MovieTypes';
 type MovieDetailsProp = RouteProp<RootStackParamList, 'MovieDetails'>;
+import UserReviewContainer from '../../Components/UserReviewContainer/UserReviewContainer';
+import axiosInstance from '../../axios/axios';
 export default function MovieDetailScreen() {
   const route = useRoute<MovieDetailsProp>();
   const [loading, setLoading] = useState(false);
@@ -18,9 +18,8 @@ export default function MovieDetailScreen() {
     const fetchMovieDetail = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(
-          `https://api.themoviedb.org/3/movie/${route.params.movieId}?language=en-US`,
-          options,
+        const res = await axiosInstance.get(
+          `/movie/${route.params.movieId}?language=en-US`,
         );
         setData(res.data);
       } catch (err) {
@@ -40,7 +39,13 @@ export default function MovieDetailScreen() {
         </View>
       ) : (
         <View>
-          {data &&  <MovieDetailsContainer data={data} />}        
+          {data && (
+            <>
+              <MovieDetailsContainer data={data} />
+              <UserReviewContainer movieId={data.id}/>
+            </>
+          )}
+         
         </View>
       )}
     </View>
