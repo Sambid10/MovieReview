@@ -10,7 +10,7 @@ export default function ProfileContainer() {
   return (
     <View style={styles.container}>
       <Image
-        style={{ height: 150, width: '100%', borderRadius: 12 }}
+        style={{ height: 150, width: '100%', borderRadius: 12, opacity: 0.9 }}
         source={require('../../assets/profileback.jpg')}
       />
       <View
@@ -21,15 +21,23 @@ export default function ProfileContainer() {
           gap: 12,
         }}
       >
-        <View style={{ position: 'absolute',top:"-150%",left:8 }}>
+        <View style={{ position: 'absolute', top: '-150%', left: 8 }}>
           <UserProfilePic />
         </View>
 
-        <View style={{ display: 'flex', gap: 4,marginLeft:120 }}>
-          <Text style={{ color: 'white', fontSize: 14 }}>
+        <View style={{ display: 'flex', gap: 4, marginLeft: 120 }}>
+          <Text style={{ color: 'white', fontSize: 16 }}>
             {auth.currentUser?.email}
           </Text>
-          <Text style={{ color: 'white', fontSize: 14 }}>@{username}</Text>
+          <Text
+            style={{
+              color: '#E5E7EB',
+              fontSize: 14,
+              textTransform: 'capitalize',
+            }}
+          >
+            @{username}
+          </Text>
         </View>
       </View>
     </View>
