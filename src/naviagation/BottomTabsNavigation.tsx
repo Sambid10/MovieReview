@@ -28,6 +28,10 @@ function MyTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
       style={{
         flexDirection: 'row',
         height: 70,
+            backgroundColor: '#001C29',
+    borderTopWidth: 0,
+    borderColor: 'transparent',
+    overflow: 'hidden',
       }}
     >
       {state.routes.map((route, index) => {
@@ -49,7 +53,7 @@ function MyTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
 
         return (
           <TouchableOpacity
-          activeOpacity={1}
+            activeOpacity={1}
             key={route.key}
             onPress={onPress}
             style={{
@@ -57,7 +61,6 @@ function MyTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
               justifyContent: 'center',
               alignItems: 'center',
               paddingVertical: 10,
-              borderTopColor: 'gray',
               borderWidth: 0,
               backgroundColor: '#001C29',
             }}

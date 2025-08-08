@@ -29,7 +29,7 @@ export default function AllReviewContainer({ movieId }: { movieId: number }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>All Review's</Text>
+      <Text style={styles.title}>Author's Review</Text>
       {loading ? (
         <ActivityIndicator color={'white'} />
       ) : (

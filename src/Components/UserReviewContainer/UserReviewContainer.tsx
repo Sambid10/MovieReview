@@ -50,7 +50,9 @@ export default function UserReviewContainer({ movieId }: { movieId: number }) {
     <View style={styles.container}>
       <Text style={styles.title}>Your Review</Text>
       {loading ? (
+        <View style={{height:32,display:"flex",justifyContent:"center",alignItems:"center"}}>
         <ActivityIndicator color={'white'} />
+        </View>
       ) : (
         <View style={{ display: 'flex', gap: 0, marginTop: 12 }}>
           {review.length > 0 ? (
@@ -90,7 +92,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   placeholder: {
-    color: 'gray',
+    color: '#9ca3af',
     fontSize: 12,
     marginLeft: 12,
   },
