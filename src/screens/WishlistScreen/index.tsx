@@ -11,7 +11,6 @@ import {
 import axiosInstance from '../../axios/axios';
 import { Movie } from '../../types/MovieTypes';
 import FastImage from 'react-native-fast-image';
-import { getAuth } from '@react-native-firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProp } from '../../naviagation/types';
 
@@ -20,7 +19,6 @@ export default function WishListScreen() {
   const [datas, setDatas] = useState<Movie[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
-  const auth = getAuth();
 
   const fetchData = async () => {
     try {
@@ -38,7 +36,7 @@ export default function WishListScreen() {
   };
   useEffect(() => {
     fetchData();
-  }, [auth.currentUser?.uid]);
+  }, []);
 
   const onRefresh = async () => {
     setRefreshing(true);
