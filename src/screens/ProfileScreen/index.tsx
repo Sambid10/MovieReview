@@ -1,25 +1,26 @@
-import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
 import { StyleSheet } from 'react-native';
-import { getAuth, signOut } from '@react-native-firebase/auth';
-import ReusableButton from '../../Components/Button/ReusableButton';
+// import { getAuth, signOut } from '@react-native-firebase/auth';
+// import ReusableButton from '../../Components/Button/ReusableButton';
+import ProfileContainer from '../../Components/ProfileContainer/ProfileContainer';
 export default function ProfileScreen() {
-  const [loading, setLoading] = useState(false);
-  const handleLogout = () => {
-    setLoading(true);
-    try {
-      signOut(getAuth()).then(() => console.log('User signed out!'));
-    } catch (err) {
-      setLoading(false)
-      console.log(err);
-    } finally {
-      () => setLoading(false);
-    }
-  };
+  // const [loading, setLoading] = useState(false);
+  // const handleLogout = () => {
+  //   setLoading(true);
+  //   try {
+  //     signOut(getAuth()).then(() => console.log('User signed out!'));
+  //   } catch (err) {
+  //     setLoading(false)
+  //     console.log(err);
+  //   } finally {
+  //     () => setLoading(false);
+  //   }
+  // };
   return (
     <View style={styles.container}>
-      <Text>Profile Screen</Text>
-      <ReusableButton title={'Logout'} onPress={handleLogout} loading={loading}/>
+      <ProfileContainer/>
+      {/* <ReusableButton title={'Logout'} onPress={handleLogout} loading={loading}/> */}
     </View>
   );
 }

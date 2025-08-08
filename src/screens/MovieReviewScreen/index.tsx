@@ -76,7 +76,6 @@ export default function MovieReviewScreen() {
       console.error(err);
     }
   };
-
   return (
     <View style={styles.container}>
       <View style={{ display: 'flex', flexDirection: 'row', padding: 6 }}>
