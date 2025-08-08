@@ -110,7 +110,7 @@ export function BottomTabs() {
       <Tab.Screen
         name="TabWishlist"
         component={WishListScreen}
-        options={{ tabBarLabel: 'Wishlist' }}
+        options={{ tabBarLabel: 'Favourites' }}
       />
       <Tab.Screen
         name="TabProfile"
