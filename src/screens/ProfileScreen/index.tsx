@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { getAuth, signOut } from '@react-native-firebase/auth';
 import ReusableButton from '../../Components/Button/ReusableButton';
@@ -18,6 +18,7 @@ export default function ProfileScreen() {
   };
   return (
     <View style={styles.container}>
+      <Text>Profile Screen</Text>
       <ReusableButton title={'Logout'} onPress={handleLogout} loading={loading}/>
     </View>
   );
