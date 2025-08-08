@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import { useEffect } from 'react';
 import { View } from 'react-native';
 import { NavigationProp, RootStackParamList } from '../../naviagation/types';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
@@ -15,7 +16,10 @@ import { Dimensions } from 'react-native';
 import { useState } from 'react';
 import { Image } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
+import axiosInstance from '../../axios/axios';
 import { getAuth } from '@react-native-firebase/auth';
+import { Movie } from '../../types/MovieTypes';
+import { addToFavourite } from '../../axios/addtoFavourites';
 type MovieReviewProp = RouteProp<RootStackParamList, 'MovieReview'>;
 export default function MovieReviewScreen() {
   const auth = getAuth();
@@ -49,6 +53,30 @@ export default function MovieReviewScreen() {
     }
   };
   const { width: screenWidth } = Dimensions.get('window');
+  const [isFavorite, setIsFavorite] = useState(false);
+  useEffect(() => {
+    async function FavoriteStatus() {
+      try {
+        const res = await axiosInstance.get(
+          '/account/22105215/favorite/movies?language=en-US&page=1',
+        );
+        const favIds = res.data.results.map((movie: Movie) => movie.id);
+        setIsFavorite(favIds.includes(route.params.moviedetails.id));
+      } catch (error) {
+        console.log('Error fetching favorites', error);
+      }
+    }
+    FavoriteStatus();
+  }, [route.params.moviedetails.id]);
+  const handleToggleFavorite = async (status: boolean) => {
+    try {
+      addToFavourite(status, route.params.moviedetails.id);
+      setIsFavorite(status);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={{ display: 'flex', flexDirection: 'row', padding: 6 }}>
@@ -74,7 +102,10 @@ export default function MovieReviewScreen() {
           <Text style={{ flexWrap: 'wrap', color: 'white', fontSize: 24 }}>
             {route.params.moviedetails.title}
           </Text>
-          <AddToFavourites movieId={route.params.moviedetails.id} />
+          <AddToFavourites
+            onToggleFavorite={handleToggleFavorite}
+            isFavourite={isFavorite}
+          />
         </View>
         <View style={{ width: '48%' }}>
           <View

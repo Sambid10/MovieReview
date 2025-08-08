@@ -16,7 +16,7 @@ export default function HomeScreen() {
             objectFit: 'cover',
             height: 42,
             width: 140,
-            marginTop: 6,
+            marginTop: 0,
             position: 'relative',
             zIndex: 50,
           }}

@@ -103,6 +103,11 @@ export default function SearchInput() {
                 height: '100%',
               }}
               data={results}
+              ListEmptyComponent={
+                <Text style={{ color: 'white', fontSize: 25 }}>
+                  No Search found..
+                </Text>
+              }
               keyExtractor={item => item.id.toString()}
               renderItem={({ item }) => (
                 <TouchableOpacity
