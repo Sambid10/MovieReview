@@ -4,13 +4,6 @@ import React from 'react';
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Moviecarasoul from '../../Components/MovieCarasoul/Moviecarasoul';
 
-const popularmovieurl =
-  'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1';
-const upcomingmoveurl =
-  'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1';
-const topratedmovieurl =
-  'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1';
-
 
 export default function HomeScreen() {
   const auth = getAuth();
@@ -66,9 +59,9 @@ export default function HomeScreen() {
           </Text>
         </View>
         <View style={{ display: 'flex', gap: 20 }}>
-          <Moviecarasoul url={popularmovieurl} title="Popular movies" />
-          <Moviecarasoul url={upcomingmoveurl} title="Upcoming Movies" />
-          <Moviecarasoul url={topratedmovieurl} title="Top-Rated Movies" />
+          <Moviecarasoul url={"/movie/popular?language=en-US&page=1"} title="Popular movies" />
+          <Moviecarasoul url={"/movie/upcoming?language=en-US&page=1"} title="Upcoming Movies" />
+          <Moviecarasoul url={"/movie/top_rated?language=en-US&page=1"} title="Top-Rated Movies" />
         </View>
       </View>
     </ScrollView>

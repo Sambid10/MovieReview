@@ -10,18 +10,9 @@ import {
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { MovieApiResponse } from '../../types/MovieTypes';
-import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProp } from '../../naviagation/types';
 import axiosInstance from '../../axios/axios';
-export const options = {
-  method: 'GET',
-  headers: {
-    accept: 'application/json',
-    Authorization:
-      'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZDQ4Njc2MjhiMjEzYTNjNTI5MGZlZWRlZTY5N2UwOSIsIm5iZiI6MTc1MTAxMDExOC42MTY5OTk5LCJzdWIiOiI2ODVlNGI0NmYzNzU2MGMwZjc4MDU4YTYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.AZiFqOvnOhM20RFrzXCYx3ZRVubpiz8jepimaFHD0xY',
-  },
-};
 export default function MovieCarousel({
   title,
   url,
@@ -37,9 +28,7 @@ export default function MovieCarousel({
   const fetchMovies = useCallback(async () => {
     try {
       setLoading(true);
-      const res1=await axiosInstance.get("movie/popular?language=en-US&page=1")
-      console.log(res1,"respomse from instance")
-      const res = await axios.get(url, options);
+      const res = await axiosInstance.get(url);
       setData(res.data);
     } catch (err) {
       console.error(err);
