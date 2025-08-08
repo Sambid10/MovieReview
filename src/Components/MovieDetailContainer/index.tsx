@@ -2,7 +2,6 @@
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Movie } from '../../types/MovieTypes';
-import { BlurView } from '@react-native-community/blur';
 import FastImage from 'react-native-fast-image';
 import { MinHrConverter } from '../../helpers/MinHrConnverter';
 import { useNavigation } from '@react-navigation/native';
@@ -14,12 +13,12 @@ export default function MovieDetailsContainer({ data }: { data: Movie }) {
   return (
     <>
       <View style={styles.container}>
-      <BlurView
+      {/* <BlurView
         style={styles.blurOverlay}
         blurType="light"
-        blurAmount={10}
+        blurAmount={80}
         reducedTransparencyFallbackColor="black"
-      />
+      /> */}
       <View
         style={{
           display: 'flex',
@@ -45,35 +44,17 @@ export default function MovieDetailsContainer({ data }: { data: Movie }) {
       </View>
       <View style={styles.titleContainer}>
         <View style={{ width: '45%' }} />
-        <View style={{ width: '55%', display: 'flex', gap: 4 }}>
+        <View style={{ width: '55%', display: 'flex', gap: 4,paddingRight:4 }}>
           <Text
-            numberOfLines={2}
+            numberOfLines={3}
             style={{ color: 'white', fontSize: 21, fontWeight: 'bold' }}
           >
             {data.title}
           </Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-            }}
-          >
-            <Image
-              style={{ height: 14, width: 14, objectFit: 'contain' }}
-              source={require('../../assets/director.png')}
-            />
-            <Text
-              numberOfLines={2}
-              style={{ color: 'white', fontSize: 14, fontWeight: 'semibold' }}
-            >
-              Directed By
-            </Text>
-          </View>
+
           <Text
             numberOfLines={2}
-            style={{ color: 'white', fontSize: 10, fontWeight: 'semibold' }}
+            style={{ color: '#E5E7EB', fontSize: 10, fontWeight: 'semibold' }}
           >
             {data.overview}
           </Text>
@@ -135,7 +116,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#FFFFFF52',
+    borderColor: '#4B5563',
     marginTop:18,
   },
   container: {
@@ -146,6 +127,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: 'black',
+    backgroundColor: 'rgba(255,255,255,0.3)',  // whitish transparent overlay
   },
   img: {
     height: 150,
@@ -155,7 +137,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     zIndex: 40,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'gray',
+    borderColor: '#4B5563',
     opacity: 0.9,
   },
   blurOverlay: {

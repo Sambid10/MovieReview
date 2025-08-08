@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     width: 120,
     resizeMode: 'cover',
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'black',
+    borderColor: '#4B5563',
     borderRadius: 12,
   },
   imagecontainer: {

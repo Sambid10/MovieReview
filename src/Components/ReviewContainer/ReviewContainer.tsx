@@ -1,8 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { BlurView } from '@react-native-community/blur';
-
 export default function ReviewContainer({
   emailusername,
   index,
@@ -18,14 +16,14 @@ export default function ReviewContainer({
       style={{
         borderRadius: 14,
         borderWidth: StyleSheet.hairlineWidth,
-        borderColor: '#000',
+        borderColor: '#4B5563',
         position: 'relative',
         overflow: 'hidden',
         marginBottom: 12,
-        minHeight:"auto"
+        minHeight:"auto",
+        backgroundColor: 'rgba(2, 128, 144, 0.3)',
       }}
     >
-      <BlurView blurType="light" blurAmount={80} style={StyleSheet.absoluteFill} />
       <View style={{ flex: 1, padding: 12, justifyContent: 'center' }}>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
           <Text style={{ color: 'white', fontSize: 10, marginBottom: 4 }}>
