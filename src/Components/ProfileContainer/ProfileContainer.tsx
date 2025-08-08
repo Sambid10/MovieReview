@@ -3,8 +3,22 @@ import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import UserProfilePic from '../UserProfilePic/UserProfilePic';
 import { getAuth } from '@react-native-firebase/auth';
-
+import { useState } from 'react';
+import { signOut } from '@react-native-firebase/auth';
+import ReusableButton from '../Button/ReusableButton';
 export default function ProfileContainer() {
+  const [loading, setLoading] = useState(false);
+  const handleLogout = () => {
+    setLoading(true);
+    try {
+      signOut(getAuth()).then(() => console.log('User signed out!'));
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
+    } finally {
+      () => setLoading(false);
+    }
+  };
   const auth = getAuth();
   const username = auth.currentUser?.email?.split('@')[0];
   return (
@@ -21,7 +35,7 @@ export default function ProfileContainer() {
           gap: 12,
         }}
       >
-        <View style={{ position: 'absolute', top: '-150%', left: 8 }}>
+        <View style={{ position: 'absolute', top: '-50%', left: 8 }}>
           <UserProfilePic />
         </View>
 
@@ -32,12 +46,21 @@ export default function ProfileContainer() {
           <Text
             style={{
               color: '#E5E7EB',
-              fontSize: 14,
+              fontSize: 13,
               textTransform: 'capitalize',
             }}
           >
-            @{username}
+            # {username}
           </Text>
+          <View style={{ marginTop: 4 }}>
+            <ReusableButton
+              title={'Logout'}
+              height={32}
+              fontSize={14}
+              onPress={handleLogout}
+              loading={loading}
+            />
+          </View>
         </View>
       </View>
     </View>

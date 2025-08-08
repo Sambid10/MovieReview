@@ -6,9 +6,9 @@ import firestore from '@react-native-firebase/firestore';
 
 import ReviewContainer from '../ReviewContainer/ReviewContainer';
 
-type Review = {
+export type Review = {
   movieId: number;
-  moviename: string;
+  movieName: string;
   review: string;
   userId: string;
 };
