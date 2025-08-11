@@ -1,40 +1,42 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  ActivityIndicator,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import { MovieApiResponse } from '../../types/MovieTypes';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import axiosInstance from '../../axios/axios';
 import MovieFlatList from '../MovieFlatList/MovieFlatList';
+import { setMoviesforCategory } from '../../redux/MovieSlice/movieSlice';
+import { RootState } from '../../redux/store';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 export default function MovieCarousel({
   title,
   url,
+  category,
 }: {
   title: string;
   url: string;
+  category: string;
 }) {
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<MovieApiResponse>();
-  const moviedata = data?.results;
+  const dispatch = useAppDispatch();
+  const moviesData = useAppSelector(
+    (state: RootState) => state.movies[category],
+  );
 
   const fetchMovies = useCallback(async () => {
     try {
       setLoading(true);
       const res = await axiosInstance.get(url);
-      setData(res.data);
+      dispatch(setMoviesforCategory({ category: category, data: res.data }));
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
     }
-  }, [url]);
-
+  }, [category, dispatch, url]);
   useEffect(() => {
-    fetchMovies();
-  }, [fetchMovies]);
+    if (!moviesData) {
+      fetchMovies();
+    }
+  }, [fetchMovies, moviesData]);
   return (
     <View style={{ marginTop: 4, display: 'flex', gap: 8 }}>
       <Text style={{ color: 'white', fontSize: 16, fontWeight: '600' }}>
@@ -45,14 +47,13 @@ export default function MovieCarousel({
           <ActivityIndicator color={'white'} />
         </View>
       ) : (
-        <MovieFlatList moviedata={moviedata!}/>
+        moviesData && <MovieFlatList moviedata={moviesData.results} />
       )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-
   loading: {
     height: 160,
     display: 'flex',

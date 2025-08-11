@@ -3,15 +3,25 @@ import React from 'react';
 import { Image, Text, View } from 'react-native';
 import { StyleSheet } from 'react-native';
 import SearchInput from '../../Components/SearchInput/SearchInput';
-import MovieCarousel from '../../Components/MovieCarasoul/Moviecarasoul';
+import MovieFlatList from '../../Components/MovieFlatList/MovieFlatList';
+import { useAppSelector } from '../../hooks/reduxHooks';
+import { RootState } from '../../redux/store';
 export default function SearchScreen() {
+  const popularMovie = useAppSelector(
+    (state: RootState) => state.movies.popular
+  );
+    const upcomingMovie = useAppSelector(
+    (state: RootState) => state.movies.upcoming
+  );
   return (
     <View style={styles.container}>
       <SearchInput />
-      <MovieCarousel
+      {/* <MovieCarousel
         title="Popular Movies"
         url="/movie/popular?language=en-US&page=1"
-      />
+      /> */}
+      {popularMovie && <MovieFlatList moviedata={popularMovie.results} />}
+
       <View
         style={{
           height: 83,
@@ -23,7 +33,7 @@ export default function SearchScreen() {
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          backgroundColor: 'rgba(255,255,255,0.3)', 
+          backgroundColor: 'rgba(255,255,255,0.3)',
         }}
       >
         <Image
@@ -38,10 +48,13 @@ export default function SearchScreen() {
           source={require('../../assets/right.png')}
         />
       </View>
-      <MovieCarousel
+      {/* <MovieCarousel
+        category="upcoming"
         title="Upcoming Movies"
         url="/movie/upcoming?language=en-US&page=1"
-      />
+      /> */}
+      {upcomingMovie &&    <MovieFlatList moviedata={upcomingMovie?.results} />}
+   
     </View>
   );
 }
