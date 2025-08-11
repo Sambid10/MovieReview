@@ -8,15 +8,17 @@ import { NavigationProp } from '../../naviagation/types';
 
 export default function MovieFlatList({
   moviedata,
+  marginTop=12
 }: {
-  moviedata: Movie[]; // <-- Now it's an array of Movie
+  moviedata: Movie[];
+  marginTop?:number
 }) {
   const navigation = useNavigation<NavigationProp>();
 
   return (
     <FlatList
       data={moviedata}
-      style={{ marginTop: 12 }}
+      style={{ marginTop: marginTop  }}
       horizontal
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (

@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { Image, Text, View } from 'react-native';
+import { ActivityIndicator, Image, Text, View } from 'react-native';
 import { StyleSheet } from 'react-native';
 import SearchInput from '../../Components/SearchInput/SearchInput';
 import MovieFlatList from '../../Components/MovieFlatList/MovieFlatList';
@@ -8,10 +8,10 @@ import { useAppSelector } from '../../hooks/reduxHooks';
 import { RootState } from '../../redux/store';
 export default function SearchScreen() {
   const popularMovie = useAppSelector(
-    (state: RootState) => state.movies.popular
+    (state: RootState) => state.movies.popular,
   );
-    const upcomingMovie = useAppSelector(
-    (state: RootState) => state.movies.upcoming
+  const upcomingMovie = useAppSelector(
+    (state: RootState) => state.movies.upcoming,
   );
   return (
     <View style={styles.container}>
@@ -20,7 +20,14 @@ export default function SearchScreen() {
         title="Popular Movies"
         url="/movie/popular?language=en-US&page=1"
       /> */}
-      {popularMovie && <MovieFlatList moviedata={popularMovie.results} />}
+      <Text style={{ color: 'white', fontSize: 16, fontWeight: '600' }}>
+        Popular movie
+      </Text>
+      {popularMovie ? (
+        <MovieFlatList marginTop={-2} moviedata={popularMovie.results} />
+      ) : (
+        <ActivityIndicator color={'white'} />
+      )}
 
       <View
         style={{
@@ -53,8 +60,14 @@ export default function SearchScreen() {
         title="Upcoming Movies"
         url="/movie/upcoming?language=en-US&page=1"
       /> */}
-      {upcomingMovie &&    <MovieFlatList moviedata={upcomingMovie?.results} />}
-   
+      <Text style={{ color: 'white', fontSize: 16, fontWeight: '600' }}>
+        Upcoming movie
+      </Text>
+      {upcomingMovie ? (
+        <MovieFlatList marginTop={-2} moviedata={upcomingMovie?.results} />
+      ) : (
+        <ActivityIndicator color={'white'} />
+      )}
     </View>
   );
 }
