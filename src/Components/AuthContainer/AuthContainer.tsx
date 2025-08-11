@@ -1,6 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { BlurView } from '@react-native-community/blur';
 import { StyleSheet } from 'react-native';
 import { View, Text } from 'react-native';
 type authScreen = 'Login' | 'Signup';
@@ -35,16 +34,6 @@ export default function AuthContainer({
   const footertext=navigateauthScreen === "Login" ? "Already have an account?" :"Don't have an account? Please"
   const secondaryfootertext=navigateauthScreen === "Login" ? "here" : "first"
   return (
-    <BlurView
-      blurType="light"
-      blurAmount={12}
-      style={{
-        height: '100%',
-        width: '100%',
-        position: 'relative',
-        zIndex: 0,
-      }}
-    >
       <View style={styles.foreground}>
         <View style={styles.header}>
           <Text style={styles.title}>{title}</Text>
@@ -70,7 +59,7 @@ export default function AuthContainer({
           </Text>
         )}
 
-        <ReusableButton loading={loading} title={btntitle} onPress={handleAuth} />
+        <ReusableButton height={42} loading={loading} title={btntitle} onPress={handleAuth} />
         <View style={styles.footer}>
           <Text style={styles.text}>{footertext}</Text>
           <TouchableOpacity
@@ -81,7 +70,6 @@ export default function AuthContainer({
           <Text style={styles.text}>{secondaryfootertext}</Text>
         </View>
       </View>
-    </BlurView>
   );
 }
 
@@ -99,7 +87,7 @@ const styles = StyleSheet.create({
     opacity: 1,
   },
   foreground: {
-    backgroundColor: 'rgba(120, 115, 115, 0.4)',
+    backgroundColor: 'rgba(44, 43, 43, 0.8)',
     position: 'relative',
     zIndex: 10,
     paddingTop: 12,

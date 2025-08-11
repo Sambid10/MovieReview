@@ -22,7 +22,6 @@ export default function SearchInput() {
   const navigation = useNavigation<NavigationProp>();
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<Movie[]>([]);
-
   useEffect(() => {
     const searchMovie = async () => {
       if (!debouncedVal.trim()) {

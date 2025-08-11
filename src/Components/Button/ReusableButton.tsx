@@ -11,16 +11,20 @@ export default function ReusableButton({
   title,
   onPress,
   loading,
+  fontSize,
+  height
 }: {
   title: string;
   onPress: () => void;
   loading: boolean;
+  height?:number
+  fontSize?:number
 }) {
   return (
     <TouchableOpacity
       onPress={onPress}
       disabled={loading}
-      style={styles.button}
+      style={[styles.button,{height:height }]}
     >
       <View>
         {!loading ? (
@@ -28,7 +32,7 @@ export default function ReusableButton({
             style={{
               color: 'white',
               textAlign: 'center',
-              fontSize: 19,
+              fontSize: fontSize ? fontSize : 19,
               fontWeight: 'bold',
               letterSpacing: 1,
             }}

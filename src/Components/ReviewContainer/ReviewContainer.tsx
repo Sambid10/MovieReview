@@ -3,11 +3,13 @@ import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 export default function ReviewContainer({
   emailusername,
+  moviename,
   index,
   review,
 }: {
   review: string;
   index: number;
+  moviename?:string
   emailusername: string;
 }) {
   return (
@@ -38,7 +40,19 @@ export default function ReviewContainer({
           >
             {emailusername}
           </Text>
+          
         </View>
+        {moviename && 
+           <Text
+            style={{
+              color: '#E5E7EB',
+              fontSize: 12,
+              marginBottom: 4,
+            }}
+          >
+            - {moviename}
+          </Text>
+          }
         <Text 
         numberOfLines={4}
         style={styles.reviewText}>{review}</Text>
