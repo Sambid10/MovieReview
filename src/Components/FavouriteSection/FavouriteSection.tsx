@@ -4,7 +4,6 @@ import axiosInstance from '../../axios/axios';
 import { Movie } from '../../types/MovieTypes';
 import { ActivityIndicator, View, Text } from 'react-native';
 import MovieFlatList from '../MovieFlatList/MovieFlatList';
-
 export default function FavouriteSection() {
   const [loading, setLoading] = useState(false);
   const [datas, setDatas] = useState<Movie[]>([]);
@@ -14,6 +13,7 @@ export default function FavouriteSection() {
       const res = await axiosInstance.get(
         `/account/22105215/favorite/movies?language=en-US&page=1&sort_by=created_at.asc`,
       );
+  
       console.log(res.data.results)
       setDatas(res.data.results);
     } catch (err) {

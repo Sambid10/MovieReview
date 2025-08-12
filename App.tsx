@@ -13,17 +13,20 @@ import { BottomTabs } from './src/naviagation/BottomTabsNavigation';
 import SignupScreen from './src/screens/SignUpScreen';
 import MovieDetailScreen from './src/screens/MovieDetailsScreen';
 import MovieReviewScreen from './src/screens/MovieReviewScreen';
+import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
-import { store } from './src/redux/store';
+import { store, persistor } from './src/redux/store';
+
 const Stack = createNativeStackNavigator<RootStackParamList>();
+
 function App() {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
 
   useEffect(() => {
-    const subscriber = onAuthStateChanged(getAuth(), user => {
-      console.log('Auth state changed:', user);
-      setUser(user);
+    const subscriber = onAuthStateChanged(getAuth(), currentUser => {
+      console.log('Auth state changed:', currentUser);
+      setUser(currentUser);
       if (initializing) setInitializing(false);
     });
     return subscriber;
@@ -32,32 +35,34 @@ function App() {
   if (initializing) return <View style={styles.container} />;
 
   return (
-    <View style={styles.container}>
-      <Provider store={store}>
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            {!user ? (
-              <>
-                <Stack.Screen name="Login" component={LoginScreen} />
-                <Stack.Screen name="Signup" component={SignupScreen} />
-              </>
-            ) : (
-              <>
-                <Stack.Screen name="Root" component={BottomTabs} />
-                <Stack.Screen
-                  name="MovieDetails"
-                  component={MovieDetailScreen}
-                />
-                <Stack.Screen
-                  name="MovieReview"
-                  component={MovieReviewScreen}
-                />
-              </>
-            )}
-          </Stack.Navigator>
-        </NavigationContainer>
-      </Provider>
-    </View>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <View style={styles.container}>
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              {!user ? (
+                <>
+                  <Stack.Screen name="Login" component={LoginScreen} />
+                  <Stack.Screen name="Signup" component={SignupScreen} />
+                </>
+              ) : (
+                <>
+                  <Stack.Screen name="Root" component={BottomTabs} />
+                  <Stack.Screen
+                    name="MovieDetails"
+                    component={MovieDetailScreen}
+                  />
+                  <Stack.Screen
+                    name="MovieReview"
+                    component={MovieReviewScreen}
+                  />
+                </>
+              )}
+            </Stack.Navigator>
+          </NavigationContainer>
+        </View>
+      </PersistGate>
+    </Provider>
   );
 }
 
