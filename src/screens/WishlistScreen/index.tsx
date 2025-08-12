@@ -13,27 +13,31 @@ import { Movie } from '../../types/MovieTypes';
 import FastImage from 'react-native-fast-image';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProp } from '../../naviagation/types';
+import TimeoutErrorContainer from '../../Components/TimeoutErrorContainer/TimeoutErrorContainer';
 
 export default function WishListScreen() {
-  const navigtion=useNavigation<NavigationProp>()
+  const navigation = useNavigation<NavigationProp>();
   const [datas, setDatas] = useState<Movie[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-   const fetchData = async () => {
+  const fetchData = async () => {
     try {
       setLoading(true);
+      setError(null);
       const res = await axiosInstance.get(
         `/account/22105215/favorite/movies?language=en-US&page=1&sort_by=created_at.asc`,
       );
       setDatas(res.data.results);
     } catch (err) {
-      setLoading(false);
+      setError('Request timed out. Please try again.');
       console.error(err);
     } finally {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -43,6 +47,7 @@ export default function WishListScreen() {
     await fetchData();
     setRefreshing(false);
   };
+
   return (
     <View style={styles.container}>
       <Text
@@ -55,24 +60,37 @@ export default function WishListScreen() {
       >
         Your Favourites
       </Text>
-      {loading ? (
-        <ActivityIndicator color={'white'} />
-      ) : (
+
+      {loading && <ActivityIndicator color={'white'} />}
+
+      {!loading && error && (
+        <TimeoutErrorContainer error={error} fetchData={fetchData} />
+      )}
+
+      {!loading && !error && (
         <FlatList
           data={datas}
           keyExtractor={item => item.id.toString()}
           numColumns={2}
-          columnWrapperStyle={{display:"flex",justifyContent:"flex-start"}}
+          columnWrapperStyle={{ display: 'flex', justifyContent: 'flex-start' }}
           renderItem={({ item }) => (
             <TouchableOpacity
-            onPress={()=>navigtion.navigate("MovieDetails",{movieId:item.id})}
+              onPress={() =>
+                navigation.navigate('MovieDetails', { movieId: item.id })
+              }
               style={{
                 width: '45%',
                 margin: 8,
               }}
             >
               <FastImage
-                style={{ width: '100%', height: 200, borderRadius: 12,borderColor:"#4B5563",borderWidth:StyleSheet.hairlineWidth }}
+                style={{
+                  width: '100%',
+                  height: 200,
+                  borderRadius: 12,
+                  borderColor: '#4B5563',
+                  borderWidth: StyleSheet.hairlineWidth,
+                }}
                 resizeMode="cover"
                 source={{
                   uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
@@ -96,12 +114,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 14,
     backgroundColor: '#002335',
-  },
-  image: {
-    width: 140,
-    height: 200,
-    borderRadius: 12,
-    marginBottom: 16,
   },
   emptyText: {
     color: 'white',
