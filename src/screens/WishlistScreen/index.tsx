@@ -27,7 +27,7 @@ export default function WishListScreen() {
       setLoading(true);
       setError(null);
       const res = await axiosInstance.get(
-        `/account/22105215/favorite/movies?language=en-US&page=1&sort_by=created_at.asc`,
+        `/account/22105/favorite/movies?language=en-US&page=1&sort_by=created_at.asc`,
       );
       setDatas(res.data.results);
     } catch (err) {
@@ -71,7 +71,7 @@ export default function WishListScreen() {
         <FlatList
           data={datas}
           keyExtractor={item => item.id.toString()}
-          numColumns={2}
+          numColumns={3}
           columnWrapperStyle={{ display: 'flex', justifyContent: 'flex-start' }}
           renderItem={({ item }) => (
             <TouchableOpacity
@@ -79,14 +79,14 @@ export default function WishListScreen() {
                 navigation.navigate('MovieDetails', { movieId: item.id })
               }
               style={{
-                width: '45%',
-                margin: 8,
+                width: '30%',
+                margin: 6,
               }}
             >
               <FastImage
                 style={{
                   width: '100%',
-                  height: 200,
+                  height: 170,
                   borderRadius: 12,
                   borderColor: '#4B5563',
                   borderWidth: StyleSheet.hairlineWidth,
