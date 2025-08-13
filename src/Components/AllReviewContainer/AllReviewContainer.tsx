@@ -31,7 +31,9 @@ export default function AllReviewContainer({ movieId }: { movieId: number }) {
     <View style={styles.container}>
       <Text style={styles.title}>Author's Review</Text>
       {loading ? (
+        <View style={{display:"flex",flex:1,justifyContent:"center",alignItems:"center"}}>
         <ActivityIndicator color={'white'} />
+        </View>
       ) : (
         <View style={{ display: 'flex', gap: 0, marginTop: 12 }}>
           {data.length > 0 ? (

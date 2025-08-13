@@ -59,9 +59,9 @@ export default function HomeScreen() {
           </Text>
         </View>
         <View style={{ display: 'flex', gap: 20 }}>
-          <Moviecarasoul url={"/movie/popular?language=en-US&page=1"} title="Popular movies" />
-          <Moviecarasoul url={"/movie/upcoming?language=en-US&page=1"} title="Upcoming Movies" />
-          <Moviecarasoul url={"/movie/top_rated?language=en-US&page=1"} title="Top-Rated Movies" />
+          <Moviecarasoul url={"/movie/popular?language=en-US&page=1"} title="Popular movies" category={"popular"} />
+          <Moviecarasoul url={"/movie/upcoming?language=en-US&page=1"} title="Upcoming Movies" category={"upcoming"}/>
+          <Moviecarasoul url={"/movie/top_rated?language=en-US&page=1"} title="Top-Rated Movies"  category={"toprated"}/>
         </View>
       </View>
     </ScrollView>

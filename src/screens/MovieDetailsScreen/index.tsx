@@ -43,12 +43,12 @@ export default function MovieDetailScreen() {
           {data && (
             <>
               <MovieDetailsContainer data={data} />
-              <UserReviewContainer movieId={data.id}/>
-              <AllReviewContainer movieId={data.id}/>
             </>
           )}
         </View>
       )}
+      <UserReviewContainer movieId={route.params.movieId} />
+      <AllReviewContainer movieId={route.params.movieId} />
     </ScrollView>
   );
 }
@@ -62,8 +62,7 @@ const styles = StyleSheet.create({
   },
   loading: {
     display: 'flex',
-    flex: 1,
-    height:"100%",
+    height: 320,
     justifyContent: 'center',
     alignItems: 'center',
   },

@@ -50,11 +50,18 @@ export default function UserReviewContainer({ movieId }: { movieId: number }) {
     <View style={styles.container}>
       <Text style={styles.title}>Your Review</Text>
       {loading ? (
-        <View style={{height:32,display:"flex",justifyContent:"center",alignItems:"center"}}>
-        <ActivityIndicator color={'white'} />
+        <View
+          style={{
+            height: 30,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <ActivityIndicator color={'white'} />
         </View>
       ) : (
-        <View style={{ display: 'flex', gap: 0, marginTop: 12 }}>
+        <View style={{ display: 'flex', gap: 0, minHeight: 30 }}>
           {review.length > 0 ? (
             review.map((rev, index) => (
               <ReviewContainer
